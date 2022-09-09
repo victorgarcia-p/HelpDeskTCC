@@ -1,0 +1,58 @@
+﻿.chat-right {
+    width: 100%;
+    justify-content: right;
+    margin: 0.5rem 0;
+}
+    .chat-right .right {
+        height: auto;
+        width: auto;
+        min-height: 50px;
+        max-width: 60%;
+        background-color: #75cbf1;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        text-align: right;
+    }
+
+.chat-left {
+    width: 100%;
+    justify-content: left;
+    margin: 0.5rem 0;
+}
+
+    .chat-left .left {
+        height: auto;
+        width: auto;
+        min-height: 50px;
+        max-width: 60%;
+        background-color: #b2e0b6;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+    }
+
+.requerente {
+    color: #0b318d;
+
+}
+
+    .requerente:hover {
+        color: #21449a;
+        text-decoration-line: underline;
+        cursor: pointer;
+    }
+
+.acompanhante {
+    color: #0b318d;
+    text-align:right;
+}
+
+    .acompanhante:hover {
+        color: #21449a;
+        text-decoration-line: underline;
+        cursor: pointer;
+    }
+
+a {
+    cursor:pointer;
+}
+

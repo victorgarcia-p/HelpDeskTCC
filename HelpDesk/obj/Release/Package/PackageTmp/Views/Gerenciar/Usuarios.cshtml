@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "Usuarios";
+    if (@User.Identity.Name.Split(';')[1] == "USUARIO")
+    {
+        Layout = "../Shared/_Layout2.cshtml";
+    }
+    else
+    {
+        Layout = "../Shared/_Layout.cshtml";
+    }
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/app-usuarios.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<input hidden id="perfilUsuario" value="@User.Identity.Name.Split(';')[1]" />
+<input hidden id="idUsuario"/>
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modalCadastro">
+    <div class="modal-dialog modal-md">
+        <div class="modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="titleCadastrar" class="modal-title">Cadastrar Usuário</h4>
+                    <h4 id="titleAlterar" class="modal-title">Alterar Usuário</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row" style="padding-bottom: 2rem;">
+                    <div class="col-md-12 col-sm-12">
+                        <form action="api/values" method="post" novalidate="" id="formCadastro" style="padding-top: 1.5rem;">
+                            <div class="row gy-3 justify-content-center">
+                                <div class="col-sm-10">
+                                    <label for="txtNome" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="txtNome" placeholder="" required="">
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <label for="txtLogin" class="form-label">Login</label>
+                                    <input type="text" class="form-control" id="txtLogin" placeholder="" required="">
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <label for="txtEmail" class="form-label">E-Mail</label>
+                                    <input type="email" class="form-control" id="txtEmail" placeholder="exemplo@exemplo.com" required>
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <label for="ddSetor" class="form-label">Setor</label>
+                                    <select class="form-control" id="ddSetor" placeholder="Setor" required>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <label for="ddPerfil" class="form-label">Perfil</label>
+                                    <select class="form-control" id="ddPerfil" placeholder="Perfil" required>
+                                    </select>
+                                    <label class="form-control" id="txtPerfil">
+                                </div>
+
+                                <div class="col-sm-10" id="divStatus">
+                                    <label for="chkAtivo" class="form-label">Ativo: </label>
+                                    <input type="checkbox" class="form-check-input" id="chkAtivo">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center container">
+                    <div>
+                        <button form="formCadastro" class="btn btn-facebook form-control" id="btnCadastrar" type="submit">Cacastrar</button>
+                        <button form="formCadastro" class="btn btn-facebook form-control" id="btnAlterar" type="submit">Alterar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="tabela" class="overflow-scroll container">
+    <div class="form-group row" style="padding-top: 2%">
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary form-control" id="btnCadastro">Cadastrar Usuário</button>
+        </div>
+    </div>
+    <table id="tabelaUsuarios" class="hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Setor</th>
+                <th>Perfil</th>
+                <th>Status</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modalCarregando">
+    <div class="modal-dialog">
+        <div class="row justify-content-center">
+            <img id="carregando" style="width:10%;" src="~/Content/Imagens/loading.gif">
+        </div>
+    </div>
+</div>

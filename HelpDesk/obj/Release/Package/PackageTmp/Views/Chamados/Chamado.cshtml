@@ -1,0 +1,157 @@
+﻿@{
+    ViewBag.Title = "Chamado: " + ViewBag.Message;
+    if (@User.Identity.Name.Split(';')[1] == "USUARIO")
+    {
+        Layout = "../Shared/_Layout2.cshtml";
+    }
+    else
+    {
+        Layout = "../Shared/_Layout.cshtml";
+    }
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/CSS/chamados.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/app-chamado.js"></script>
+
+<input hidden id="chamadoID" value=@ViewBag.Message>
+<input hidden id="usuarioLogado" value=@User.Identity.Name.Split(';')[0]>
+<input hidden id="perfil" value=@User.Identity.Name.Split(';')[1]>
+
+<div class="row container">
+    <div class="col-sm-5" style="text-align:left;"><h4 style="padding-top:2rem;">Chamado: @ViewBag.Message</h4></div>
+    <div class="col-sm-2" style="text-align:center;"><i class="bi bi-plus-square-fill" style="cursor:pointer;font-size:40px;color:#384e60;" id="btnNovo" title="Nova mensagem"></i></div>
+    <div class="col-sm-5" style="text-align:right;"><h4 style="padding-top:2rem;" id="chamadoStatus"></h4></div>
+</div>
+
+<div class="container">
+    <div class="container justify-content-center">
+        <div id="dadosChamado" class="row justify-content-center" style="text-align:center; padding-top:1rem;">
+            <div class="col-sm-6 col-md-3 col-lg-3" style="padding: 0px 5px;">
+                <h6 style="background-color: lightgrey; height: 30px; padding-top: 5px;">Requerente</h6>
+                <div style="padding: 0px 5px; text-align: left;" id="requerente"></div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-lg-3" style="padding: 0px 5px;">
+                <h6 style="background-color: lightgrey; height: 30px; padding-top: 5px;">Acompanhando <span class='bi bi-person-plus-fill' style='cursor:pointer;font-size:18px;padding-left:8px;' id='addAcompanhante' title='Atribuir'></span></h6>
+                <div style="padding: 0px 5px; text-align: left;" id="acompanhando"></div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-lg-3" style="padding: 0px 5px;">
+                <h6 style="background-color: lightgrey; height: 30px; padding-top: 5px;">Atribuído para <span class='bi bi-person-plus-fill' style='cursor:pointer;font-size:18px;padding-left:8px;' id='addTecnico' title='Atribuir'></span></h6>
+                <div style="padding: 0px 5px; text-align:left;" id="tecnico"></div>
+            </div>
+            <div class="col-sm-6 col-md-3 col-lg-3" style="padding: 0px 5px;">
+                <h6 style="background-color: lightgrey; height: 30px; padding-top: 5px;">Categoria <span class='bi bi-pencil-fill' style='cursor:pointer;font-size:14px;padding-left:8px;' id='editCategoria' title='Atribuir'></span></h6>
+                <div style="padding: 0px 5px; text-align:left;" id="categoria"></div>
+            </div>
+        </div>
+
+        <div id="tituloChamado" class="row justify-content-center" style="padding-top:2rem;"></div>
+
+        <div class="row" style="margin-top:1rem;">
+            <form class="form-control" style="padding:2rem 1rem 1rem 2rem;" id="historicoChamado"></form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modalNovo">
+    <div class="modal-dialog modal-md">
+        <div class="modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Nova Mensagem</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row" style="padding-bottom: 2rem;">
+                    <div class="col-md-12 col-sm-12">
+                        <form action="api/values" method="post" novalidate="" id="formNovo" style="padding-top: 1.5rem;">
+                            <div class="row gy-3 justify-content-center">
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="txtMensagem" class="form-label">Mensagem</label>
+                                        </div>
+                                        <div style="text-align:right;" class="col-sm-6" id="divEncerrar"><input type="checkbox" id="chkEncerrar"><label for="chkEncerrar" class="form-label">Encerrar</label></div>
+                                    </div>
+                                    <textarea class="form-control" id="txtMensagem" style="min-height:150px;" placeholder=""></textarea>
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <label for="inputArquivos" class="form-label">Arquivos</label>
+                                    <input type="file" class="form-control" id="inputArquivos">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center container">
+                    <div>
+                        <button form="formNovo" class="btn btn-facebook form-control" id="btnCriar" type="submit">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modalAtribuir">
+    <div class="modal-dialog modal-md">
+        <div class="modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="titulo"></h4>
+                    <input hidden id="txtTitulo">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row" style="padding-bottom: 2rem;">
+                    <div class="col-md-12 col-sm-12">
+                        <form action="api/values" method="post" novalidate="" id="formAtribuir" style="padding-top: 1.5rem;">
+                            <div class="row gy-3 justify-content-center">
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="ddUsuarios" multiple></select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center container">
+                    <div>
+                        <button form="formAtribuir" class="btn btn-facebook form-control" id="btnAtribuir" type="submit">Atribuir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modalCategoria">
+    <div class="modal-dialog modal-md">
+        <div class="modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="titulo">Alterar Categoria</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row" style="padding-bottom: 2rem;">
+                    <div class="col-md-12 col-sm-12">
+                        <form action="api/values" method="post" novalidate="" id="formCategoria" style="padding-top: 1.5rem;">
+                            <div class="row gy-3 justify-content-center">
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="ddCategoria"></select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center container">
+                    <div>
+                        <button form="formCategoria" class="btn btn-facebook form-control" id="btnAlterarCategoria" type="submit">Atribuir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

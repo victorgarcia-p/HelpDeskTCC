@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Setores";
+    if (@User.Identity.Name.Split(';')[1] == "USUARIO")
+    {
+        Layout = "../Shared/_Layout2.cshtml";
+    }
+    else
+    {
+        Layout = "../Shared/_Layout.cshtml";
+    }
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/app-setores.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<input hidden id="perfilUsuario" value="@User.Identity.Name.Split(';')[1]" />
+<input hidden id="idSetor" />
+
+<div class="form-group row" style="padding-top: 2%">
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-primary form-control" id="btnCadastro">Cadastrar Setor</button>
+    </div>
+</div>
+<div id="tabela" class="overflow-scroll container">
+    <table id="tabelaSetores" class="hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descricao</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modalCadastro">
+    <div class="modal-dialog modal-md">
+        <div class="modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="titleCadastrar" class="modal-title">Cadastrar Setor</h4>
+                    <h4 id="titleAlterar" class="modal-title">Alterar Setor</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row" style="padding-bottom: 2rem;">
+                    <div class="col-md-12 col-sm-12">
+                        <form action="api/values" method="post" novalidate="" id="formCadastro" style="padding-top: 1.5rem;">
+                            <div class="row gy-3 justify-content-center">
+                                <div class="col-sm-10">
+                                    <label for="txtDescricao" class="form-label">Descrição</label>
+                                    <input type="text" class="form-control" id="txtDescricao" placeholder="" required="">
+                                </div>
+                                <div class="col-sm-10" id="divStatus">
+                                    <label for="chkAtivo" class="form-label">Ativo: </label>
+                                    <input type="checkbox" class="form-check-input" id="chkAtivo">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center container">
+                    <div>
+                        <button form="formCadastro" class="btn btn-facebook form-control" id="btnCadastrar" type="submit">Cacastrar</button>
+                        <button form="formCadastro" class="btn btn-facebook form-control" id="btnAlterar" type="submit">Alterar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modalCarregando">
+    <div class="modal-dialog">
+        <div class="row justify-content-center">
+            <img id="carregando" style="width:10%;" src="~/Content/Imagens/loading.gif">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+   max-width: 280px;
+}*/
+
+.bg-menu {
+    --bs-bg-opacity: 1;
+    background-color: #384e60;
+    /*    border-color: #004782;*/
+}
+
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+table.dataTable span {
+    margin: 0 5px;
+    text-align: center;
+    font-size: 18px;
+}
+
+    table.dataTable span:hover {
+        color: #004782;
+    }
+
+table.dataTable thead th, table.dataTable thead td {
+    padding: 10px 10px !important;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 5px 5px !important;
+}
+
+.alert {
+    padding: 5px;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.b-example-divider {
+    height: 3rem;
+    background-color: rgba(0, 0, 0, .1);
+    border: solid rgba(0, 0, 0, .15);
+    border-width: 1px 0;
+    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.form-control-dark {
+    color: #fff;
+    background-color: var(--bs-dark);
+    border-color: var(--bs-gray);
+}
+
+    .form-control-dark:focus {
+        color: #fff;
+        background-color: var(--bs-dark);
+        border-color: #fff;
+        box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
+    }
+
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}
+
+.text-small {
+    font-size: 85%;
+}
+
+.dropdown-toggle {
+    outline: 0;
+}
+
+.logo-home {
+    margin: 10px 0px 10px 0px;
+    width: 8%;
+}
+
+#baixarPlanilha {
+    visibility: hidden;
+}
+
+.btn-primary, .btn-primary:focus, .btn-primary:active {
+    color: #fff;
+    background-color: #004782;
+    border-color: #004782;
+}
+
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #9d9d9d;
+        border-color: #9d9d9d;
+    }
+
+footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-facebook {
+    color: #fff;
+    background-color: #004782;
+    border-color: #004782;
+}
+
+    .btn-facebook:hover {
+        color: #fff;
+        background-color: #073875;
+        border-color: #073875;
+    }
+
+    .btn-facebook:focus {
+        color: #fff;
+        background-color: #073875;
+        border-color: #0a58ca;
+        box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+    }
+
+.color-picker {
+    visibility: hidden;
+}
+.label-color-picker {
+    border-radius: 5px !important;
+    padding-left: 10px; 
+}

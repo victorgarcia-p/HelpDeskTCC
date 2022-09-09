@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Chamados";
+    if (@User.Identity.Name.Split(';')[1] == "USUARIO")
+    {
+        Layout = "../Shared/_Layout2.cshtml";
+    }
+    else
+    {
+        Layout = "../Shared/_Layout.cshtml";
+    }
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/app-chamados.js"></script>
+
+<input hidden id="nomeUsuario" value="@User.Identity.Name.Split(';')[0]" />
+<input hidden id="perfilUsuario" value="@User.Identity.Name.Split(';')[1]" />
+
+<div class="form-group row" style="padding-top: 2%">
+    <div class="col-lg-2 col-md-4 col-sm-12 justify-content-center">
+        <button type="button" class="btn btn-primary form-control" id="btnNovo" style="margin-bottom:1rem;">Novo Chamado</button>
+    </div>
+    <div class="col-lg-2 col-md-8 col-sm-12"></div>
+    <div class="col-lg-2 col-md-3 col-sm-12 justify-content-center">
+        <select class="form-control" id="ddFiltro" style="margin-bottom:1rem;">
+            <option value="CHAMADOS.STATUS" selected>STATUS</option>
+            <option value="CHAMADOS.CRIADOPOR">REQUERENTE</option>
+            <option value="USUARIOS.LOGIN">ACOMPANHANDO</option>
+            <option value="CHAMADOS.TITULO">TITULO</option>
+        </select>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-12 justify-content-center" style="margin-bottom:1rem;">
+        <select class="form-control" id="ddTipo">
+            <option value="=">é igual a:</option>
+            <option value="<>" selected>é diferente de:</option>
+            <option value="LIKE">contém:</option>
+        </select>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-12 justify-content-center" style="margin-bottom:1rem;">
+        <input type="text" class="form-control" id="txtFiltro" value="ENCERRADO" />
+    </div>
+    <div class="col-lg-1 col-md-2 col-sm-12 container" style="margin-bottom: 1rem; max-width: 100px;">
+        <button class="bi bi-search btn-facebook form-control" id="btnFiltrar"></button>
+    </div>
+</div>
+<div class="overflow-scroll col-12">
+    <table id="tabelaChamados" class="table table-striped" style="width:100%;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TÍTULO</th>
+                <th>CRIAÇÃO</th>
+                <th>REQUERENTE</th>
+                <th>ACOMPANHAMENTO</th>
+                <th>ATRIBUIDO</th>
+                <th>STATUS</th>
+                <th>CATEGORIA</th>
+                <th>ENCERRAMENTO</th>
+                <th><span class="bi bi-trash"></span></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="modalNovo">
+    <div class="modal-dialog modal-md">
+        <div class="modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Novo Chamado</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="row" style="padding-bottom: 2rem;">
+                    <div class="col-md-12 col-sm-12">
+                        <form action="api/values" method="post" novalidate="" id="formNovo" style="padding-top: 1.5rem;">
+                            <div class="row gy-3 justify-content-center">
+                                <div class="col-sm-10">
+                                    <label for="txtTitulo" class="form-label">Titulo</label>
+                                    <input type="text" class="form-control" id="txtTitulo" placeholder="" required="">
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <label for="txtDescricao" class="form-label">Descricao</label>
+                                    <textarea class="form-control" id="txtDescricao" style="min-height:150px;" placeholder="" required=""></textarea>
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <label for="ddUsuarios" class="form-label">Acompanhamento</label>
+                                    <select class="form-control" id="ddUsuarios" multiple></select>
+                                </div>
+
+                                <div class="col-sm-10">
+                                    <label for="inputArquivos" class="form-label">Arquivos</label>
+                                    <input type="file" class="form-control" id="inputArquivos">
+                                </div>
+                                <div class="col-sm-10">
+                                    <label for="ddCategoria" class="form-label">Categoria</label>
+                                    <select class="form-control" id="ddCategoria" placeholder="Categoria" required>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center container">
+                    <div>
+                        <button form="formNovo" class="btn btn-facebook form-control" id="btnCriar" type="submit">Criar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
